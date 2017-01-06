@@ -1,0 +1,47 @@
+{% load static %}
+
+<html>
+<head>
+<title>Chat Box</title>
+<link rel="stylesheet" type="text/css" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="{% static 'chat.css'}">
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.js"></script>
+
+<script src="{% static 'chat.js' %}"></script>
+</head>
+<body>
+	<div id="chat-body" class="panel panel-default">
+	<div class="panel-heading">Chat Box</div>
+	<div id="msg-list" class="panel-body">
+	<ul id=msg-list class="list-group">
+	{% for obj in chat %}
+		{%if obj.user == request.user %}
+			<li class="text-right list-group-item">{{obj.message}}</li>
+		{% else %}
+			<li class="text-right list-group-item">{{obj.message}}</li>
+		{% endif %}
+		{% empty %}
+			<li class="text-right list-group-item">No messages Yet..!!!</li>
+		{% endfor %}
+		<script>
+			var chatlist= document.getElementById('msg-list-div');
+			chatlist.scrollTop =  chatlist.scrollHeight;
+		</script>
+	</ul>
+</div>
+</div>
+
+<form id="chat-form" method="post" action="/post/">
+	<div id="chat-bottom" class="input-group">
+		<input type="text" id="chat-msg" name="chat-msg" class="
+		form-control"/>
+		<span class="input-group-btn">
+			<input type= "btn-default" class="btn btn-default" id="send" value="Send"/>
+		</span>
+	</div>
+</form>
+</body>
+</html>
